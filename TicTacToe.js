@@ -1,22 +1,16 @@
 var board=["E","E","E","E","E","E","E","E","E"]
-var difficulty="expert";// for the time being
+var difficulty="beginner";// for the time being
 var turn,result,status;// status=end,running,beginning
 // var oMovesCount
 // TURN KA PANGA HAI!!!!!!!!!!1
 
-function toggleTurn(turni=turn) {
-	if (turni=="X") {
-		turni="O";
+function toggleTurn() {
+	if (turn=="X") {
+		turn="O";
 	}
 	else {
-		turni="X";
+		turn="X";
 	}
-}
-
-
-function makeBeginnerMove(){
-
-	console.log("Beginner Move");
 }
 
 function emptyCells(state) {
@@ -51,7 +45,7 @@ function isTerminal(state){
             return true;
         }
     }
-    var available=emptyCells();
+    var available=emptyCells(state);
     if(available.length==0){
     	// result="draw";
     	return true;
@@ -60,10 +54,10 @@ function isTerminal(state){
     	return false;
     }
 }
+
 function applyAction(state,movePosition) {
 	var temp=state;
 	temp[movePosition]=turn;
-	toggleTurn();
 	return temp;
 }
 
@@ -133,8 +127,6 @@ function minMaxVal(state) {
 	return stateScore;
 }
 
-
-
 function makeExpertMove(state) {
 	console.log("Expert Move");
 	var available=emptyCells(state);
@@ -154,6 +146,25 @@ function makeExpertMove(state) {
 	// beginMakeMove(board)
 }
 
+
+
+function makeBeginnerMove(state) {
+    var available=emptyCells(state);
+    var movePosition = available[Math.floor(Math.random() * available.length)];
+    var next=applyAction(state,movePosition);
+    // var action = new AIAction(randomCell);
+    board=next
+	console.log(board);
+	toggleTurn();
+    beginMakeMove(board)
+    // var next = action.applyTo(game.currentState);
+
+    // ui.insertAt(randomCell, turn);
+
+    // game.advanceTo(next);
+}
+
+
 function makeMove(state){
 	switch(difficulty){
 		case "beginner":
@@ -165,23 +176,28 @@ function makeMove(state){
 	}
 }
 
+
 function beginMakeMove(state) {
 	currentState=state;
 	if(isTerminal(currentState)){
+		console.log(currentState);
 		status="ended";
-		if(whoWon(state)=="X"){
+		if(whoWon(currentState)=="X"){
 			console.log("X wins");
-		}else if(whoWon(state)=="O"){
+		}else if(whoWon(currentState)=="O"){
 			console.log("O wins");
 		}
 		else{
 			console.log("Draw");
 		}
 	}
-	if(turn=="X"){
-		makeMove(state);
+	else if(turn=="X"){
+		// console.log(board);
+		makeMove(currentState);
 	}else{
-		console.log("Human turn")
+		// console.log(board);
+		// console.log("Human turn")
+		makeMove(currentState);
 	}
 }
 
@@ -200,4 +216,11 @@ $(".cell").each(function() {
 
 		}
 	})
+});
+
+$(document).ready(function () {
+	turn="O";
+	board[3]=turn
+	toggleTurn()
+	beginMakeMove(board)
 });
