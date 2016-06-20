@@ -1,6 +1,8 @@
 var board=["E","E","E","E","E","E","E","E","E"]
 var difficulty="beginner";// for the time being
-var turn,result,status;// status=end,running,beginning
+var turn,result,status="beginning";// status=end,running,beginning
+var player,computer;
+
 // var oMovesCount
 // TURN KA PANGA HAI!!!!!!!!!!1
 
@@ -146,14 +148,13 @@ function makeExpertMove(state) {
 	// beginMakeMove(board)
 }
 
-
-
 function makeBeginnerMove(state) {
     var available=emptyCells(state);
     var movePosition = available[Math.floor(Math.random() * available.length)];
     var next=applyAction(state,movePosition);
     // var action = new AIAction(randomCell);
     board=next
+	updateCells();
 	console.log(board);
 	toggleTurn();
     beginMakeMove(board)
@@ -163,7 +164,6 @@ function makeBeginnerMove(state) {
 
     // game.advanceTo(next);
 }
-
 
 function makeMove(state){
 	switch(difficulty){
@@ -191,9 +191,11 @@ function beginMakeMove(state) {
 			console.log("Draw");
 		}
 	}
-	else if(turn=="X"){
+	else if(turn==player){
 		// console.log(board);
-		makeMove(currentState);
+		console.log("Human Turn");
+		return;
+		// makeMove(currentState);
 	}else{
 		// console.log(board);
 		// console.log("Human turn")
@@ -201,26 +203,49 @@ function beginMakeMove(state) {
 	}
 }
 
-$(".cell").each(function() {
-	var $this = $(this);
-	$this.click(function() {
-		if(status === "running") { // && turn === HumanTurn && this is blank
-			// take value of that cell store it in idx
-
-			// var next = new State(globals.game.currentState);
-			// next.board[indx] = "X";
-			// board[idx]="X";
-			// ui.insertAt(indx, "X");
-			// toggleTurn();
-			// beginMakeMove(board);
-
+function updateCells(){
+	$(".cell").each(function(index){
+		if(board[index]=="X")
+			$(this).html("X");
+		else if(board[index]=="O"){
+			$(this).html("O");
 		}
-	})
-});
+	});
+}
+
+function initializeCells(){
+	status="running"
+	if(computer=="X"){
+		var available=emptyCells(board);
+		var movePosition = available[Math.floor(Math.random() * available.length)];
+		turn="X";
+		board[movePosition]=turn;
+		toggleTurn();
+		updateCells();	
+	}else{
+		turn=player;
+	}
+}
 
 $(document).ready(function () {
-	turn="O";
-	board[3]=turn
-	toggleTurn()
-	beginMakeMove(board)
+	$(".cell").click("on",function(){
+		if(turn===player && $(this).html()==="" && status!="ended"){
+			console.log(status);
+			var idx=Number($(this).attr("index"));
+			board[idx]=player;
+			updateCells();
+			toggleTurn();
+			beginMakeMove(board);
+		}
+	});
+	
+	$(".btn").click("on",function(){
+		player=$(this).text();
+		if(player=="X"){
+			computer="O";
+		}else{
+			computer="X";
+		}
+		initializeCells();
+	});
 });
