@@ -3,24 +3,107 @@
 <head>
 	<title></title>
 	<link rel = 'stylesheet' type = 'text/css' href = 'TicTacToe.css'>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dancing+Script">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Courgette">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Kalam:700">
 </head>
-<body>
-	
-	<div class="board">
-		<div class="cell" index="0"></div>
-		<div class="cell" index="1"></div>
-		<div class="cell" index="2"></div>
-		<div class="cell" index="3"></div>
-		<div class="cell" index="4"></div>
-		<div class="cell" index="5"></div>
-		<div class="cell" index="6"></div>
-		<div class="cell" index="7"></div>
-		<div class="cell" index="8"></div>
-	</div>
 
-<button class="btn" id="X">X</button>
-<button class="btn" id="O">O</button>
-<button class="btn difficulty">beginner</button>
-<button class="btn difficulty">expert</button>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">OPTIONS</h4>
+      </div>
+      <div class="modal-body">
+<form>
+  <div class="form-group">
+    <label for="exampleInputEmail1">PLAY AS</label>
+<div class="btn-group" data-toggle="buttons">
+	<label class="radio-inline btn btn-primary active">
+	<input type="radio" name="playAs" id="cross" value="X" autocomplete="off">X
+	</label>
+	<label class="radio-inline btn btn-primary">
+	<input type="radio" name="playAs" id="zero" value="O" autocomplete="off">O
+	</label>  
+	  </div>
+  </div>
+	
+  <div class="form-group">
+    <label for="exampleInputPassword1">DIFFICULTY</label>
+	  <div class="btn-group" data-toggle="buttons">
+<label class="radio-inline btn btn-primary active">
+<input type="radio" name="difficulty" id="blind" value="beginner">beginner
+</label>
+<label class="radio-inline  btn btn-primary">
+<input type="radio" name="difficulty" id="master" value="expert">expert
+</label>  
+	  </div>
+</div>
+</form>
+		  
+      </div>
+      <div class="modal-footer">
+		  <button type="button" class="btn btn-primary" data-dismiss="modal" id="play">PLAY</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<body class="body-down">
+	<div class="container">
+		<div class="jumbotron mainHeading" id="home">
+			<div class="row page-header">
+				<h1 class="text-center text-uppercase">Tic Tac Toe</h1>
+			</div>
+		</div>
+		<div class="content">
+			<div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-12 col-lg-4 col-lg-offset-4">
+				<div class="panel panel-success">
+					<div class="panel-heading">
+						<h3 class="panel-title text-center">Let's Play</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row" id="alertBox">
+							<div class="alert alert-danger" role="alert">Please start NEW GAME</div>
+						</div>
+						<div class="well well-sm">
+							<div class="row">
+									<div class="board">
+									<div class="cell" index="0"></div>
+									<div class="cell" index="1"></div>
+									<div class="cell" index="2"></div>
+									<div class="cell" index="3"></div>
+									<div class="cell" index="4"></div>
+									<div class="cell" index="5"></div>
+									<div class="cell" index="6"></div>
+									<div class="cell" index="7"></div>
+									<div class="cell" index="8"></div>
+								</div>
+							</div>
+						</div>
+						<div id="buttonBox" class="row">
+							<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+								<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal">New Game</button>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-6 col-lg-6">
+								<button type="button" class="btn btn-warning btn-block" id="retry" disabled>Retry</button>
+							</div>
+						</div>
+					</div>
+					<div class="panel-footer">
+						<h6 class="text-left">By <cite>Nishchay Suteri</cite></h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="TicTacToe.js"></script>
 </body>
+
 </html>

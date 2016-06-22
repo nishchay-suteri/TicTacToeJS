@@ -1,21 +1,35 @@
 .board {
-    height: 420px;
-    width: 420px;
+    height: 210px;
+    width: 210px;
     margin: 0 auto;
 }
 
+.body-down {
+  background-color: #9b59b6;
+}
+.mainHeading{
+  font-family: 'Kalam', cursive;
+}
+.content {
+  font-family: 'Courgette', cursive;
+}
+
+
 .cell {
-    width: 140px;
-    height: 140px;
-    border: 2px dashed lightskyblue;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
+    width: 70px;
+    height:70px;
+    border: 2px dotted blue;
     cursor:pointer;
     float:left;
-    line-height: 140px;
     text-align: center;
-    font-family: "Arial Narrow";
     font-weight: bold;
-    font-size: 70px;
 }
+
+.redColor{
+    color:red;
+}
+
+.green{
+    color:green;
+}
+

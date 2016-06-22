@@ -1,12 +1,30 @@
-var board=["E","E","E","E","E","E","E","E","E"]
+var board=["E","E","E","E","E","E","E","E","E"];
 var difficulty="beginner";// for the time being
+var prevDiff="beginner";
 var turn,result,status="beginning";// status=end,running,beginning
-var player,computer;
+var player="X",computer="O";
+var winner;
 // var oMoves
 /*To Do:-
-- Own UI
 - Optimize Speed(starting randomly..)+Efficiency(using oMoves)
 */
+
+function initialize(d,s){
+	board=["E","E","E","E","E","E","E","E","E"];
+	status="beginning";
+	// turn="X";
+	updateCells();
+}
+
+function displayResult(){
+	if(winner==player){
+		$("#alertBox").html('<div class="alert alert-success" role="alert">Congrats!! YOU WON!</div>');
+	}else if(winner==computer){
+		$("#alertBox").html('<div class="alert alert-danger" role="alert">Sorry, You Lose!</div>');
+	}else{
+		$("#alertBox").html('<div class="alert alert-warning" role="alert">Hey, it\'s a DRAW!</div>');
+	}
+}
 
 function score(state) {
 	if(whoWon(state)=="X"){
@@ -200,15 +218,20 @@ function beginMakeMove(state) {
 		status="ended";
 		if(whoWon(currentState)=="X"){
 			console.log("X wins");
+			winner="X";
 		}else if(whoWon(currentState)=="O"){
 			console.log("O wins");
+			winner="O";
 		}
 		else{
 			console.log("Draw");
+			winner="No One";
 		}
+		displayResult();
 	}
 	else if(turn==player){
-		console.log("Human Turn");
+		// console.log("Human Turn");
+		$("#alertBox").html('<div class="alert alert-info" role="alert">It\'s Your Turn!</div>');
 	}
 	else{
 		makeMove(currentState);
@@ -217,10 +240,13 @@ function beginMakeMove(state) {
 
 function updateCells(){
 	$(".cell").each(function(index){
-		if(board[index]=="X")
-			$(this).html("X");
+		if(board[index]=="X"){
+			$(this).html("<h3 class='redColor'>X</h3>");
+		}
 		else if(board[index]=="O"){
-			$(this).html("O");
+			$(this).html("<h3 class='greenColor'>O</h3>");
+		}else{
+			$(this).html("");
 		}
 	});
 }
@@ -228,9 +254,11 @@ function updateCells(){
 function initializeCells(){
 	status="running"
 	if(computer=="X"){
+		$("#alertBox").html('<div class="alert alert-info" role="alert">It\'s Computer\'s Turn!</div>');
 		turn=computer;
 		beginMakeMove(board);
 	}else{
+		$("#alertBox").html('<div class="alert alert-info" role="alert">It\'s Your Turn!</div>');
 		turn=player;
 	}
 }
@@ -246,17 +274,27 @@ $(document).ready(function () {
 		}
 	});
 	
-	$(".play").click("on",function(){
-		player=$(this).text();
+	$("input[name='playAs']").change("on",function(){
+		player=$(this).val();
 		if(player=="X"){
 			computer="O";
 		}else{
 			computer="X";
 		}
+	});
+	
+	$("input[name='difficulty']").change(function(){
+		difficulty=$(this).val();
+	});
+	
+	$("#play").click("on",function(){
+		$("#retry").removeAttr("disabled");
+		initialize();
 		initializeCells();
 	});
 	
-	$(".difficulty").click("on",function(){
-		difficulty=$(this).text();
+	$("#retry").click("on",function(){
+		initialize();
+		initializeCells();
 	});
 });
